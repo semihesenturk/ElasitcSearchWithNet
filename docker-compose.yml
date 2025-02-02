@@ -9,8 +9,8 @@ services:
       - "discovery.type=single-node"
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=DkIedPPSCb
-      - 'ES_JAVA_OPTS=-XX:UseSVE=0'
-      - 'CLI_JAVA_OPTS=-XX:UseSVE=0'
+      - "ES_JAVA_OPTS=-XX:UseSVE=0"
+      - "CLI_JAVA_OPTS=-XX:UseSVE=0"
     networks:
       - es-net
     ports:
@@ -18,7 +18,7 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.7.1
+    image: docker.elastic.co/kibana/kibana:8.6.0
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     expose:
