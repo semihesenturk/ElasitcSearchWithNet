@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SE.ElasticSearch.API", "SE.ElasticSearch.API\SE.ElasticSearch.API.csproj", "{C6EE033A-CA54-48F6-8F48-D8039C1C8A3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES.ElasticSearch.API", "ES.ElasticSearch.API\ES.ElasticSearch.API.csproj", "{1A9F8C91-49DC-4E77-849A-4BB6ABD015CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6EE033A-CA54-48F6-8F48-D8039C1C8A3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6EE033A-CA54-48F6-8F48-D8039C1C8A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6EE033A-CA54-48F6-8F48-D8039C1C8A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6EE033A-CA54-48F6-8F48-D8039C1C8A3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A9F8C91-49DC-4E77-849A-4BB6ABD015CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A9F8C91-49DC-4E77-849A-4BB6ABD015CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A9F8C91-49DC-4E77-849A-4BB6ABD015CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A9F8C91-49DC-4E77-849A-4BB6ABD015CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
