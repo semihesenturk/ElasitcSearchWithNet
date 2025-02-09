@@ -11,4 +11,10 @@ public class ProductsController(ProductService productService) : BaseController
     {
         return CreateActionResult(await productService.SaveAsync(request));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        return CreateActionResult(await productService.GetAllAsync());
+    }
 }
