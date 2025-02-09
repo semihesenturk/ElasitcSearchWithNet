@@ -8,7 +8,7 @@ public class ProductRepository(ElasticClient client)
     public async Task<Product?> SaveAsync(Product product)
     {
         product.Created = DateTime.Now;
-        var response = await client.IndexAsync(product, i => i.Index("products"));
+        var response = await client.IndexAsync(product, i => i.Index("products").Id(Guid.NewGuid().ToString()));
         
         //Fast fail
         if(!response.IsValid) return null;
