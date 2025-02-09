@@ -24,4 +24,13 @@ public class ProductService(ProductRepository productRepository)
 
         return ResponseDto<List<ProductDto>>.Success(productListDto, HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<ProductDto?>> GetByIdAsync(string id)
+    {
+        var hasProduct = await productRepository.GetByIdAsync(id);
+        if (hasProduct == null)
+            return ResponseDto<ProductDto>.Fail("Product not found", HttpStatusCode.NotFound);
+        
+        return ResponseDto<ProductDto>.Success(hasProduct.CreateDto(), HttpStatusCode.OK);
+    }
 }

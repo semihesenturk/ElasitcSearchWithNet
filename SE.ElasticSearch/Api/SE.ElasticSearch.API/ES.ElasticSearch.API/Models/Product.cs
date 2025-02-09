@@ -30,7 +30,7 @@ public class Product
             new ProductFeatureDto(
                 Feature.Width,
                 Feature.Height,
-                Feature.Color)
+                Feature.Color.ToString())
             );
     }
 }  

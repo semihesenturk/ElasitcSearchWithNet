@@ -17,4 +17,10 @@ public class ProductsController(ProductService productService) : BaseController
     {
         return CreateActionResult(await productService.GetAllAsync());
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        return CreateActionResult(await productService.GetByIdAsync(id));
+    }
 }
