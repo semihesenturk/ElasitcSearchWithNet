@@ -1,8 +1,7 @@
-using System.Collections.Immutable;
 using System.Net;
+using Elastic.Clients.Elasticsearch;
 using ES.ElasticSearch.API.Dtos;
 using ES.ElasticSearch.API.Repositories;
-using Nest;
 
 namespace ES.ElasticSearch.API.Services;
 
@@ -50,16 +49,18 @@ public class ProductService(ProductRepository productRepository, ILogger<Product
     {
         var deleteResponse = await productRepository.DeleteAsync(id);
 
-        if (!deleteResponse.IsValid && deleteResponse.Result == Result.NotFound)
+        if (deleteResponse is { IsValidResponse: false, Result: Result.NotFound })
         {
             return ResponseDto<bool>.Fail("Product not found for delete", HttpStatusCode.NotFound);
         }
 
-        if (!deleteResponse.IsValid)
+        if (!deleteResponse.IsValidResponse)
         {
+            deleteResponse.TryGetOriginalException(out Exception? exception);
+            
             logger.LogError(
-                $"Failed to delete product: {deleteResponse.OriginalException}," +
-                $" Error: {deleteResponse.ServerError.Error}");
+                $"Failed to delete product: {exception}," +
+                $" Error: {deleteResponse.ElasticsearchServerError.Error}");
            
             return ResponseDto<bool>.Fail("Failed to Delete Product", HttpStatusCode.InternalServerError);
         }
