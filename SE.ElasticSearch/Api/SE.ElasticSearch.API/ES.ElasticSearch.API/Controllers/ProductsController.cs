@@ -29,4 +29,10 @@ public class ProductsController(ProductService productService) : BaseController
     {
         return CreateActionResult(await productService.UpdateAsync(request));
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        return CreateActionResult(await productService.DeleteAsync(id));
+    }
 }
