@@ -6,12 +6,6 @@ namespace ES.ElasticSearch.API.Controllers;
 
 public class ProductsController(ProductService productService) : BaseController
 {
-    [HttpPost]
-    public async Task<IActionResult> Save(ProductCreateDto request)
-    {
-        return CreateActionResult(await productService.SaveAsync(request));
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -22,5 +16,17 @@ public class ProductsController(ProductService productService) : BaseController
     public async Task<IActionResult> GetById(string id)
     {
         return CreateActionResult(await productService.GetByIdAsync(id));
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Save(ProductCreateDto request)
+    {
+        return CreateActionResult(await productService.SaveAsync(request));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(ProductUpdateDto request)
+    {
+        return CreateActionResult(await productService.UpdateAsync(request));
     }
 }

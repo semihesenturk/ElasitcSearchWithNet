@@ -33,4 +33,15 @@ public class ProductService(ProductRepository productRepository)
         
         return ResponseDto<ProductDto>.Success(hasProduct.CreateDto(), HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<bool>> UpdateAsync(ProductUpdateDto updateProduct)
+    {
+        var isSuccess = await productRepository.UpdateAsync(updateProduct);
+        
+        if (!isSuccess)
+            return ResponseDto<bool>.Fail("Failed to Update Product", HttpStatusCode.InternalServerError);
+        
+        return ResponseDto<bool>.Success(true, HttpStatusCode.NoContent);
+        
+    }
 }
