@@ -40,4 +40,12 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<List<ECommerceDto>>> MatchAllQuery()
+    {
+        var getResponse = await eCommerceRepository.MatchAllQueryAsync();
+        var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
+        
+        return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
+    }
 }

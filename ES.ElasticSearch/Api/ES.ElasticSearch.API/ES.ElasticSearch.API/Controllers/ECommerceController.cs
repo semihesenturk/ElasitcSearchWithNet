@@ -29,4 +29,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.RangeQuery(fromPrice, toPrice));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MatchAllQuery()
+    {
+        return CreateActionResult(await eCommerceService.MatchAllQuery());
+    }
 }
