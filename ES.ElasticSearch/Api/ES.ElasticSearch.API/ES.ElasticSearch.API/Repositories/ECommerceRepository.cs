@@ -42,4 +42,35 @@ public class ECommerceRepository(ElasticsearchClient client)
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
     }
+
+    public async Task<ImmutableList<ECommerce>> TermsQuery(List<string> customerFirstNameList)
+    {
+        var terms = new List<FieldValue>();
+        customerFirstNameList.ForEach(x =>
+            terms.Add(x)
+        );
+
+        //First way to search
+        // var termsQuery = new TermsQuery
+        // {
+        //     Field = "customer_first_name.keyword",
+        //     Terms = new TermsQueryField(terms.AsReadOnly())
+        // };
+        //
+        // var result =await client.SearchAsync<ECommerce>(s =>
+        //     s.Index(IndexName).Query(termsQuery));
+        
+        //Second way to search
+        var result = await client.SearchAsync<ECommerce>(
+            s => s.Index(IndexName)
+                .Size(100)
+                .Query(q => q
+                    .Terms(t => t
+                        .Field(f => f.CustomerFirstName
+                            .Suffix("keyword"))
+                        .Terms(new TermsQueryField(terms.AsReadOnly())))));
+
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
 }

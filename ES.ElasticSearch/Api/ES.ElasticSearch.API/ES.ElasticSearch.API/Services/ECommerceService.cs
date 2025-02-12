@@ -16,4 +16,12 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<List<ECommerceDto>>> TermsQuery(List<string> customerFirstNameList)
+    {
+        var getResponse = await eCommerceRepository.TermsQuery(customerFirstNameList);
+        var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
+        
+        return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
+    }
 }

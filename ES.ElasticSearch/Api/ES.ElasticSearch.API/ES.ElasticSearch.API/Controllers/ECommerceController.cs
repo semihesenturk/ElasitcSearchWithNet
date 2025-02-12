@@ -11,4 +11,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.GetWithCustomerFirstNameTerm(customerFirstName));
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> TermsQuery(List<string> customerFirstNameList)
+    {
+        return CreateActionResult(await eCommerceService.TermsQuery(customerFirstNameList));
+    }
 }
