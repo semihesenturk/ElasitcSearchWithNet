@@ -116,4 +116,15 @@ public class ECommerceRepository(ElasticsearchClient client)
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
     }
+    
+    public async Task<ImmutableList<ECommerce>> PaginationQueryAsync(int page, int pageSize)
+    {
+        var pageFrom = (page - 1) * pageSize;
+        var result = await client.SearchAsync<ECommerce>(s=>s.Index(IndexName)
+            .Size(pageSize).From(pageFrom)
+            .Query(q=>q.MatchAll(_ => {})));
+        
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
 }

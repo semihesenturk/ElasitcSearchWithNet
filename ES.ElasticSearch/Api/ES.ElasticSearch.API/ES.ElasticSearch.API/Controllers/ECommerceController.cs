@@ -35,4 +35,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.MatchAllQuery());
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> PaginationQuery(int page, int pageSize)
+    {
+        return CreateActionResult(await eCommerceService.PaginationQueryAsync(page, pageSize));
+    }
 }
