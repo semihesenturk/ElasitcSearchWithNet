@@ -47,4 +47,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.WildCardQueryAsync(customerFullName));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> FuzzyQuery(string customerName)
+    {
+        return CreateActionResult(await eCommerceService.FuzzyQueryAsync(customerName));
+    }
 }

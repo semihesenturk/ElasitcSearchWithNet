@@ -64,4 +64,12 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<List<ECommerceDto>>> FuzzyQueryAsync(string customerName)
+    {
+        var getResponse = await eCommerceRepository.FuzzyQueryAsync(customerName);
+        var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
+        
+        return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
+    }
 }
