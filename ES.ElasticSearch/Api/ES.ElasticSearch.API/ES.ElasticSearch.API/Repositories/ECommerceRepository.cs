@@ -9,7 +9,7 @@ public class ECommerceRepository(ElasticsearchClient client)
 {
     private const string IndexName = "kibana_sample_data_ecommerce";
 
-    public async Task<ImmutableList<ECommerce>> TermQuery(string customerFirstName)
+    public async Task<ImmutableList<ECommerce>> TermQueryAsync(string customerFirstName)
     {
         //First way to search
         // var result = await client.SearchAsync<ECommerce>(
@@ -43,7 +43,7 @@ public class ECommerceRepository(ElasticsearchClient client)
         return result.Documents.ToImmutableList();
     }
 
-    public async Task<ImmutableList<ECommerce>> TermsQuery(List<string> customerFirstNameList)
+    public async Task<ImmutableList<ECommerce>> TermsQueryAsync(List<string> customerFirstNameList)
     {
         var terms = new List<FieldValue>();
         customerFirstNameList.ForEach(x =>
@@ -59,7 +59,7 @@ public class ECommerceRepository(ElasticsearchClient client)
         //
         // var result =await client.SearchAsync<ECommerce>(s =>
         //     s.Index(IndexName).Query(termsQuery));
-        
+
         //Second way to search
         var result = await client.SearchAsync<ECommerce>(
             s => s.Index(IndexName)
@@ -69,6 +69,22 @@ public class ECommerceRepository(ElasticsearchClient client)
                         .Field(f => f.CustomerFirstName
                             .Suffix("keyword"))
                         .Terms(new TermsQueryField(terms.AsReadOnly())))));
+
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
+
+    public async Task<ImmutableList<ECommerce>> PrefixQueryAsync(string customerFullName)
+    {
+        var result = await client.SearchAsync<ECommerce>(
+            s => s.Index(IndexName)
+                .Size(100)
+                .Query(q =>
+                    q.Prefix(p => p
+                        .Field(
+                            f => f.CustomerFullName
+                                .Suffix("keyword"))
+                        .Value(customerFullName))));
 
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();

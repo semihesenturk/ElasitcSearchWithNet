@@ -17,4 +17,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.TermsQuery(customerFirstNameList));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> PrefixQuery(string customerFullName)
+    {
+        return CreateActionResult(await eCommerceService.PrefixQuery(customerFullName));
+    }
 }

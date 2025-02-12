@@ -11,7 +11,7 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
 
     public async Task<ResponseDto<List<ECommerceDto>>> GetWithCustomerFirstNameTerm(string customerFirstName)
     {
-        var getResponse = await eCommerceRepository.TermQuery(customerFirstName);
+        var getResponse = await eCommerceRepository.TermQueryAsync(customerFirstName);
         var responseListDto = getResponse.Select(x=>x.CreateDto()).ToList();
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
@@ -19,7 +19,15 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
 
     public async Task<ResponseDto<List<ECommerceDto>>> TermsQuery(List<string> customerFirstNameList)
     {
-        var getResponse = await eCommerceRepository.TermsQuery(customerFirstNameList);
+        var getResponse = await eCommerceRepository.TermsQueryAsync(customerFirstNameList);
+        var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
+        
+        return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
+    }
+
+    public async Task<ResponseDto<List<ECommerceDto>>> PrefixQuery(string customerFullName)
+    {
+        var getResponse = await eCommerceRepository.PrefixQueryAsync(customerFullName);
         var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
