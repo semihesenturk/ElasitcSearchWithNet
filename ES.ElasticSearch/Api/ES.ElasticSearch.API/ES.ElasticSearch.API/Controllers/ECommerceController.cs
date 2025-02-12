@@ -41,4 +41,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.PaginationQueryAsync(page, pageSize));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> WildCardQuery(string customerFullName)
+    {
+        return CreateActionResult(await eCommerceService.WildCardQueryAsync(customerFullName));
+    }
 }
