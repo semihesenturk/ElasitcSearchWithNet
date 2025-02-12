@@ -89,4 +89,21 @@ public class ECommerceRepository(ElasticsearchClient client)
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
     }
+
+    public async Task<ImmutableList<ECommerce>> RangeQueryAsync(double fromPrice, double toPrice)
+    {
+        var result = await client.SearchAsync<ECommerce>(s=>s.Index(IndexName)
+            .Size(100)
+            .Query(q => q
+                .Range( r=> r
+                    .NumberRange( nr=> nr
+                        .Field(f=> f.TaxFullTotalPrice)
+                        .Gte(fromPrice).Lte(toPrice))
+                    )
+                )
+        );
+        
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
 }

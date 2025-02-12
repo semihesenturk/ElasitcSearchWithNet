@@ -5,6 +5,7 @@ public record ECommerceDto(
     string CustomerFirstName,
     string CustomerLastName,
     string CustomerFullName,
+    double TaxfulTotalPrice,
     string[] Category,
     int OrderId,
     DateTime OrderDate,

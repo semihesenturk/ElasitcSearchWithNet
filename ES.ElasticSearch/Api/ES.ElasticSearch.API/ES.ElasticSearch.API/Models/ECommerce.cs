@@ -14,6 +14,8 @@ public class ECommerce
     public string CustomerLastName { get; set; } = null!;
     [JsonPropertyName("customer_full_name")]
     public string CustomerFullName { get; set; } = null!;
+    [JsonPropertyName("taxful_total_price")]
+    public double TaxFullTotalPrice { get; set; }
 
     [JsonPropertyName("category")]
     public string[] Category { get; set; } = null!;
@@ -31,6 +33,7 @@ public class ECommerce
             CustomerFirstName,
             CustomerLastName,
             CustomerFullName,
+            TaxFullTotalPrice,
             Category,
             OrderId,
             OrderDate,
