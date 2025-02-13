@@ -53,4 +53,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.FuzzyQueryAsync(customerName));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MatchQueryFullText(string categoryName)
+    {
+        return CreateActionResult(await eCommerceService.MatchQueryFullTextAsync(categoryName));
+    }
 }
