@@ -71,4 +71,11 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.MatchPhraseFullTextQueryAsync(customerFullName));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> CompoundQueryExampleOne(string cityName, double taxfulTotalPrice, string categoryName, string manufacturerName)
+    {
+        return CreateActionResult(await eCommerceService.CompoundQueryExampleOne(cityName, taxfulTotalPrice, categoryName, manufacturerName));
+    }
+    
 }

@@ -196,4 +196,35 @@ public class ECommerceRepository(ElasticsearchClient client)
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
     }
+
+    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleOne(string cityName, double taxfulTotalPrice, string categoryName,string manufacturerName)
+    {
+        var result = await client.SearchAsync<ECommerce>(s => s.Index(IndexName)
+            .Size(100)
+            .Query(q=>q
+                .Bool(b=>b
+                    .Must(m=>m
+                        .Term(t=>t
+                            .Field("geoip.city_name")
+                            .Value(cityName)))
+                    .MustNot(mn=>mn
+                        .Range(r=>r
+                            .NumberRange(nr=>nr
+                                .Field(f=>f.TaxFullTotalPrice)
+                                .Lte(taxfulTotalPrice))))
+                    .Should(sh=>sh
+                        .Term(st=>st
+                            .Field(f=>f.Category.Suffix("keyword"))
+                            .Value(categoryName))
+                    )
+                    .Filter(f=>f
+                        .Term(ft=>ft
+                            .Field("manufacturer.keyword")
+                            .Value(manufacturerName)))
+                ))
+        );
+        
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
 }

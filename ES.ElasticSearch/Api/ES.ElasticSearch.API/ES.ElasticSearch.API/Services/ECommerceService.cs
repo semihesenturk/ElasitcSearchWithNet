@@ -96,4 +96,13 @@ public class ECommerceService(ECommerceRepository eCommerceRepository, ILogger<E
         
         return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
     }
+
+    public async Task<ResponseDto<List<ECommerceDto>>> CompoundQueryExampleOne(string cityName, double taxfulTotalPrice,
+        string categoryName, string manufacturerName)
+    {
+        var getResponse = await eCommerceRepository.CompoundQueryExampleOne(cityName, taxfulTotalPrice, categoryName, manufacturerName);
+        var responseListDto = getResponse.Select(x => x.CreateDto()).ToList();
+        
+        return ResponseDto<List<ECommerceDto>>.Success(responseListDto, HttpStatusCode.OK);
+    }
 }
