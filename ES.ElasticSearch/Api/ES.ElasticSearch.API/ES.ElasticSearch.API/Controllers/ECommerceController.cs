@@ -11,7 +11,7 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.GetWithCustomerFirstNameTerm(customerFirstName));
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> TermsQuery(List<string> customerFirstNameList)
     {
@@ -35,7 +35,7 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.MatchAllQuery());
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> PaginationQuery(int page, int pageSize)
     {
@@ -58,5 +58,11 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     public async Task<IActionResult> MatchQueryFullText(string categoryName)
     {
         return CreateActionResult(await eCommerceService.MatchQueryFullTextAsync(categoryName));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MatchBoolPrefixFullTextQuery(string customerFullName)
+    {
+        return CreateActionResult(await eCommerceService.MatchBooPrefixFullTextQueryAsync(customerFullName));
     }
 }
