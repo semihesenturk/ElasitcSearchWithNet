@@ -227,4 +227,23 @@ public class ECommerceRepository(ElasticsearchClient client)
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
     }
+
+    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleTwo(string customerFullName)
+    {
+        var result = await client.SearchAsync<ECommerce>(s => s.Index(IndexName)
+            .Query(q => q
+                .Bool(b => b
+                    .Should(m => m
+                        .Match(mt => mt
+                            .Field(f => f.CustomerFullName)
+                            .Query(customerFullName))
+                        .Prefix(p=>p
+                            .Field(f=>f.CustomerFullName.Suffix("keyword"))
+                            .Value(customerFullName))))
+            )
+        );
+        
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
 }
