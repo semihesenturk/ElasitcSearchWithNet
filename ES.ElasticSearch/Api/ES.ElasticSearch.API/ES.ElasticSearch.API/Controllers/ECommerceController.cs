@@ -83,5 +83,11 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.CompoundQueryExampleTwo(customerFullName));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MultiMatchQuery(string name)
+    {
+        return CreateActionResult(await eCommerceService.MultiMatchQuery(name));
+    }
     
 }

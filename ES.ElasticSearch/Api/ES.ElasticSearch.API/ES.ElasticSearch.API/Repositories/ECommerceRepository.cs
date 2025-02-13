@@ -197,7 +197,7 @@ public class ECommerceRepository(ElasticsearchClient client)
         return result.Documents.ToImmutableList();
     }
 
-    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleOne(string cityName, double taxfulTotalPrice, string categoryName,string manufacturerName)
+    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleOneAsync(string cityName, double taxfulTotalPrice, string categoryName,string manufacturerName)
     {
         var result = await client.SearchAsync<ECommerce>(s => s.Index(IndexName)
             .Size(100)
@@ -228,7 +228,7 @@ public class ECommerceRepository(ElasticsearchClient client)
         return result.Documents.ToImmutableList();
     }
 
-    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleTwo(string customerFullName)
+    public async Task<ImmutableList<ECommerce>> CompoundQueryExampleTwoAsync(string customerFullName)
     {
         var result = await client.SearchAsync<ECommerce>(s => s.Index(IndexName)
             .Query(q => q
@@ -242,6 +242,21 @@ public class ECommerceRepository(ElasticsearchClient client)
                             .Value(customerFullName))))
             )
         );
+        
+        foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
+        return result.Documents.ToImmutableList();
+    }
+
+    public async Task<ImmutableList<ECommerce>> MultiMatchQueryAsync(string name)
+    {
+        var result = await client.SearchAsync<ECommerce>(s => s.Index(IndexName)
+            .Query(q => q
+                .MultiMatch(mm => mm
+                    .Fields(
+                        new Field("customer_first_name")
+                        .And("customer_last_name")
+                        .And("customer_full_name"))
+                    .Query(name))));
         
         foreach (var hit in result.Hits) hit.Source.Id = hit.Id;
         return result.Documents.ToImmutableList();
