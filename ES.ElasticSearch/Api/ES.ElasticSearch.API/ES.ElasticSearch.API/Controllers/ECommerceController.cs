@@ -65,4 +65,10 @@ public class ECommerceController(ECommerceService eCommerceService) : BaseContro
     {
         return CreateActionResult(await eCommerceService.MatchBooPrefixFullTextQueryAsync(customerFullName));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MatchPhraseFullTextQuery(string customerFullName)
+    {
+        return CreateActionResult(await eCommerceService.MatchPhraseFullTextQueryAsync(customerFullName));
+    }
 }
