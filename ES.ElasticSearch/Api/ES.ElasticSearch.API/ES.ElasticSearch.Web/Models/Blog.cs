@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using ES.ElasticSearch.Web.Dtos;
 
 namespace ES.ElasticSearch.Web.Models;
 
@@ -16,4 +17,9 @@ public class Blog
     public Guid UserId { get; set; }
     [JsonPropertyName("created")]
     public DateTime Created { get; set; }
+
+    public BlogDto CreateDto()
+    {
+        return new BlogDto(Id, Title, Content, Tags, UserId, Created);
+    }
 }

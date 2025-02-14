@@ -1,4 +1,6 @@
 using ES.ElasticSearch.Web.Extension;
+using ES.ElasticSearch.Web.Repositories;
+using ES.ElasticSearch.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ builder.Services.AddControllersWithViews();
 
 //Add ElasticSearch
 builder.Services.AddElastic(builder.Configuration);
+builder.Services.AddScoped<BlogRepository>();
+builder.Services.AddScoped<BlogService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
