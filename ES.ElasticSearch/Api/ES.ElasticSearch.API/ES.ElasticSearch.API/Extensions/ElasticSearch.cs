@@ -1,5 +1,6 @@
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
+using ES.ElasticSearch.API.Models;
 
 namespace ES.ElasticSearch.API.Extensions;
 
@@ -13,6 +14,7 @@ public static class ElasticSearchExt
             .Authentication(new BasicAuthentication(userName, password));
         
         var client = new ElasticsearchClient(settings);
+        // AddDefaultMappings(client);
         services.AddSingleton(client);
     }
 }
