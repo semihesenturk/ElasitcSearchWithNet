@@ -1,14 +1,13 @@
-using ES.ElasticSearch.Web.Models;
-using ES.ElasticSearch.Web.Repositories;
+using ES.ElasticSearch.Web.Repositories.Blog;
 using ES.ElasticSearch.Web.ViewModel;
 
-namespace ES.ElasticSearch.Web.Services;
+namespace ES.ElasticSearch.Web.Services.Blog;
 
 public class BlogService(BlogRepository blogRepository)
 {
     public async Task<bool> SaveAsync(BlogCreateViewModel request)
     {
-        var blog = new Blog
+        var blog = new Models.Blog.Blog
         {
             Title = request.Title,
             UserId = Guid.NewGuid(),

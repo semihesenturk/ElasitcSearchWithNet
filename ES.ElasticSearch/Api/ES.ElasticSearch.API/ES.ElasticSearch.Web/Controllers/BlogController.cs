@@ -1,4 +1,5 @@
 using ES.ElasticSearch.Web.Services;
+using ES.ElasticSearch.Web.Services.Blog;
 using ES.ElasticSearch.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 

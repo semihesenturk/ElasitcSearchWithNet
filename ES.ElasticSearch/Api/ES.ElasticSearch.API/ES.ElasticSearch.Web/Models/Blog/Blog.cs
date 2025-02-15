@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using ES.ElasticSearch.Web.Dtos;
+using ES.ElasticSearch.Web.Dtos.Blog;
 
-namespace ES.ElasticSearch.Web.Models;
+namespace ES.ElasticSearch.Web.Models.Blog;
 
 public class Blog
 {

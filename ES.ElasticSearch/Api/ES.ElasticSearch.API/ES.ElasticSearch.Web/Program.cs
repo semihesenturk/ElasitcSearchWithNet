@@ -1,6 +1,8 @@
 using ES.ElasticSearch.Web.Extension;
-using ES.ElasticSearch.Web.Repositories;
-using ES.ElasticSearch.Web.Services;
+using ES.ElasticSearch.Web.Repositories.Blog;
+using ES.ElasticSearch.Web.Repositories.ECommerce;
+using ES.ElasticSearch.Web.Services.Blog;
+using ES.ElasticSearch.Web.Services.ECommerce;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddElastic(builder.Configuration);
 builder.Services.AddScoped<BlogRepository>();
 builder.Services.AddScoped<BlogService>();
+builder.Services.AddScoped<ECommerceRepository>();
+builder.Services.AddScoped<ECommerceService>();
 
 var app = builder.Build();
 

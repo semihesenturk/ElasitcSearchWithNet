@@ -1,6 +1,7 @@
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using ES.ElasticSearch.Web.Models;
+using ES.ElasticSearch.Web.Models.Blog;
 
 namespace ES.ElasticSearch.Web.Extension;
 

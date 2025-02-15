@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
-using ES.ElasticSearch.API.Dtos.ECommerce;
 
-namespace ES.ElasticSearch.API.Models.ECommerceModel;
+namespace ES.ElasticSearch.Web.Models.ECommerce;
 
 public class ECommerce
 {
@@ -13,6 +12,8 @@ public class ECommerce
     public string CustomerLastName { get; set; } = null!;
     [JsonPropertyName("customer_full_name")]
     public string CustomerFullName { get; set; } = null!;
+    [JsonPropertyName("customer_gender")]
+    public string CustomerGender { get; set; } = null!;
     [JsonPropertyName("taxful_total_price")]
     public double TaxFullTotalPrice { get; set; }
 
@@ -25,19 +26,6 @@ public class ECommerce
 
     [JsonPropertyName("products")]
     public Product[] Products { get; set; }
-
-    public ECommerceDto CreateDto()
-    {
-        return new ECommerceDto(Id,
-            CustomerFirstName,
-            CustomerLastName,
-            CustomerFullName,
-            TaxFullTotalPrice,
-            Category,
-            OrderId,
-            OrderDate,
-            Products.Select(p => new ECommerceProductDto(p.Id, p.ProductName)).ToArray());
-    }
 }
 
 public class Product

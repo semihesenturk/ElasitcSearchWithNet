@@ -1,14 +1,13 @@
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.QueryDsl;
-using ES.ElasticSearch.Web.Models;
 
-namespace ES.ElasticSearch.Web.Repositories;
+namespace ES.ElasticSearch.Web.Repositories.Blog;
 
 public class BlogRepository(ElasticsearchClient client)
 {
     private const string IndexName = "blog";
 
-    public async Task<Blog?> SaveAsync(Blog blog)
+    public async Task<Models.Blog.Blog?> SaveAsync(Models.Blog.Blog blog)
     {
         blog.Created = DateTime.Now;
 
@@ -19,23 +18,23 @@ public class BlogRepository(ElasticsearchClient client)
         return blog;
     }
 
-    public async Task<List<Blog>> SearchAsync(string searchText)
+    public async Task<List<Models.Blog.Blog>> SearchAsync(string searchText)
     {
-        List<Action<QueryDescriptor<Blog>>> listQuery = [];
+        List<Action<QueryDescriptor<Models.Blog.Blog>>> listQuery = [];
         
-        Action<QueryDescriptor<Blog>> matchAllQuery = (q) => q.MatchAll(_ => { });
+        Action<QueryDescriptor<Models.Blog.Blog>> matchAllQuery = (q) => q.MatchAll(_ => { });
         
-        Action<QueryDescriptor<Blog>> matchContent = (q) => q
+        Action<QueryDescriptor<Models.Blog.Blog>> matchContent = (q) => q
             .Match(m => m
                 .Field(f => f.Content)
                 .Query(searchText));
         
-        Action<QueryDescriptor<Blog>> titleMatchBoolPrefix = (q) => q
+        Action<QueryDescriptor<Models.Blog.Blog>> titleMatchBoolPrefix = (q) => q
             .MatchBoolPrefix(m => m
                 .Field(f => f.Content)
                 .Query(searchText));
 
-        Action<QueryDescriptor<Blog>> tagTerm = (q) => q
+        Action<QueryDescriptor<Models.Blog.Blog>> tagTerm = (q) => q
             .Term(t => t
                 .Field(f => f.Tags.Suffix("keyword"))
                 .Value(searchText));
@@ -51,7 +50,7 @@ public class BlogRepository(ElasticsearchClient client)
             listQuery.Add(tagTerm);
         }
         
-        var result = await client.SearchAsync<Blog>(s => s.Index(IndexName)
+        var result = await client.SearchAsync<Models.Blog.Blog>(s => s.Index(IndexName)
             .Size(100)
             .Query(q => q
                 .Bool(b => b

@@ -1,4 +1,4 @@
-namespace ES.ElasticSearch.Web.Dtos;
+namespace ES.ElasticSearch.Web.Dtos.Blog;
 
 public record BlogDto(
     string Id,
