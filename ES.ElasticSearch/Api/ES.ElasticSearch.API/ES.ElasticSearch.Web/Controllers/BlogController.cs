@@ -12,6 +12,19 @@ public class BlogController(BlogService blogService) : Controller
         return View();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Search()
+    {
+        return View(await blogService.SearchAsync(string.Empty));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Search(string searchText)
+    {
+        ViewBag.SearchText = searchText;
+        return View(await blogService.SearchAsync(searchText));
+    }
+
     [HttpPost]
     public async Task<IActionResult> Save(BlogCreateViewModel model)
     {
@@ -22,7 +35,7 @@ public class BlogController(BlogService blogService) : Controller
             TempData["result"] = "Failed to save blog";
             return RedirectToAction(nameof(Save));
         }
-        
+
         TempData["result"] = "Saved blog";
         return RedirectToAction(nameof(Save));
     }

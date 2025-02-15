@@ -10,8 +10,4 @@
       <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.17.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Pages\" />
-    </ItemGroup>
-
 </Project>
